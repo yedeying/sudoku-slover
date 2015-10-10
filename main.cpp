@@ -191,18 +191,12 @@ void read(int chessBoard[9][9]) {
 // }
 
 void updateQueue(node box[9][3][3], queue<number> &que, int validMap[9][9], int chessBoard[9][9]) {
+    /**
+     * rule1: 直接摒除法
+     * rule2: 唯一解法
+     * rule3: 区间摒除法
+     */
     // update box with rule1
-    // for (int i = 0; i < 9; i++) {
-        // if (i != cur.i) {
-            // signBox(box, i, cur.x, cur.y, false);
-            // continue;
-        // }
-        // for (int j = 0; j < 9; j++) {
-            // signBox(box, i, cur.x, j, false);
-            // signBox(box, i, j, cur.y, false);
-            // signBox(box, i, cur.x / 3 * 3 + j / 3, cur.y / 3 * 3 + j % 3, false);
-        // }
-    // }
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (chessBoard[i][j] != 0) {
@@ -299,7 +293,7 @@ void updateQueue(node box[9][3][3], queue<number> &que, int validMap[9][9], int 
             if (sum == 1 && validMap[tmpX][tmpY]) {
                 validMap[tmpX][tmpY] = 0;
                 que.push(number(i, tmpX, tmpY));
-                cout << "box " << ' ';
+                cqout << "box " << ' ';
                 cout << tmpX + 1 << ' ' << tmpY + 1 << ' ' << i + 1 << endl;
             }
         }
@@ -328,11 +322,6 @@ void updateQueue(node box[9][3][3], queue<number> &que, int validMap[9][9], int 
 }
 
 void bfs(node box[9][3][3], queue<number> &que, int chessBoard[9][9]) {
-    /**
-     * rule1: 直接摒除法
-     * rule2: 唯一解法
-     * rule3: 区间摒除法
-     */
     int validMap[9][9];
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
@@ -350,21 +339,7 @@ void bfs(node box[9][3][3], queue<number> &que, int chessBoard[9][9]) {
         if (chessBoard[cur.x][cur.y] != 0) {
             continue;
         }
-        // update chessBoard
         chessBoard[cur.x][cur.y] = cur.i + 1;
-
-        // for (int i = 0; i < 9; i++) {
-            // if (i != cur.i) {
-                // signBox(box, i, cur.x, cur.y, false);
-                // continue;
-            // }
-            // for (int j = 0; j < 9; j++) {
-                // signBox(box, i, cur.x, j, false);
-                // signBox(box, i, j, cur.y, false);
-                // signBox(box, i, cur.x / 3 * 3 + j / 3, cur.y / 3 * 3 + j % 3, false);
-            // }
-        // }
-
         updateQueue(box, que, validMap, chessBoard);
     }
 }
